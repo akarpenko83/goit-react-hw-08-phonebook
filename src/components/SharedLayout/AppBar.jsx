@@ -17,7 +17,7 @@ export const AppBar = () => {
           <Image
             width={50}
             src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Contacts-icon.png"
-            alt="TMDB logotype"
+            alt="logotype"
           />
         </Logo>
         <nav>
