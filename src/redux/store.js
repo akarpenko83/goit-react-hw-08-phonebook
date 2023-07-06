@@ -2,6 +2,7 @@ import persistReducer from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
 import { filterSlice } from './filterSlice';
 import { contactsApi } from './contactSlice';
+import { authApi } from './authSlice';
 import {
   configureStore,
   getDefaultMiddleware,
@@ -16,12 +17,11 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { authApi } from './authSlice';
 
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['mutations'],
+  // whitelist: ['mutations'],
 };
 
 const middleware = [
