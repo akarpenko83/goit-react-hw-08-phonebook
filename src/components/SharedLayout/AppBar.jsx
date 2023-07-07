@@ -8,8 +8,15 @@ import {
   Logo,
 } from './AppBar.styled';
 import { AuthNav } from './AuthNav';
+import { useSelector } from 'react-redux';
+import { authSelectors } from 'redux/auth/authSlice';
+import { UserMenu } from './UserMenu';
+import { ContactsPage } from 'Pages/ContactsPage';
 
 export const AppBar = () => {
+  const isLoggedIn = useSelector(
+    authSelectors.selectIsLoggedIn,
+  );
   return (
     <Container>
       <Header>
@@ -22,8 +29,9 @@ export const AppBar = () => {
         </Logo>
         <nav>
           <Link to="/">HomePage</Link>
+          <Link to="/contacts">ContactsPage</Link>
         </nav>
-        <AuthNav />
+        {isLoggedIn ? <UserMenu /> : <AuthNav />}
       </Header>
       <main>
         <Suspense fallback={<div>Loading...</div>}>
