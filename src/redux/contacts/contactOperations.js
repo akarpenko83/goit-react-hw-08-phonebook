@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Notify } from 'notiflix';
 
 axios.defaults.baseURL =
   'https://connections-api.herokuapp.com/';
@@ -9,9 +8,8 @@ const getContacts = createAsyncThunk(
   'contacts/getContacts',
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get('/contacts');
-      Notify.success('Service received fetch request');
-      return data;
+      const response = await axios.get('/contacts');
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

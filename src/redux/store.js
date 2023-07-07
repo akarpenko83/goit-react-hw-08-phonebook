@@ -38,7 +38,6 @@ const middleware = [
       ],
     },
   }),
-  // contactsSlice.middleware,
 ];
 export const store = configureStore({
   reducer: {
