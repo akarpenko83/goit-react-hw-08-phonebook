@@ -4,13 +4,13 @@ import {
   Container,
   Header,
   Image,
-  Link,
   Logo,
 } from './AppBar.styled';
-import { AuthNav } from './AuthNav';
+import { AuthNav } from '../AuthNav/AuthNav';
 import { useSelector } from 'react-redux';
 import { authSelectors } from 'redux/auth/authSlice';
-import { UserMenu } from './UserMenu';
+import { UserMenu } from '../UserMenu/UserMenu';
+import { Navigation } from 'components/Navigation/Navigation';
 
 export const AppBar = () => {
   const isLoggedIn = useSelector(
@@ -26,10 +26,7 @@ export const AppBar = () => {
             alt="logotype"
           />
         </Logo>
-        <nav>
-          <Link to="/">HomePage</Link>
-          <Link to="/contacts">ContactsPage</Link>
-        </nav>
+        <Navigation />
         {isLoggedIn ? <UserMenu /> : <AuthNav />}
       </Header>
       <main>

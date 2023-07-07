@@ -14,7 +14,7 @@ const token = {
 };
 const register = createAsyncThunk(
   'auth/register',
-  async credentials => {
+  async (credentials, thunkAPI) => {
     try {
       const { data } = await axios.post(
         '/users/signup',
@@ -25,6 +25,7 @@ const register = createAsyncThunk(
       return data;
     } catch (error) {
       console.log(error);
+      return thunkAPI.rejectWithValue(error.message);
     }
   },
 );
@@ -51,8 +52,25 @@ const logout = createAsyncThunk('auth/logout', async () => {
     Notify.failure('Unable to logout');
   }
 });
+const refreshCurrentUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (!persistedToken) return thunkAPI.rejectWithValue();
+
+    token.set(persistedToken);
+
+    try {
+      const response = await axios.get('/users/current');
+      return response.data;
+    } catch (error) {}
+  },
+);
 export const authOperations = {
   register,
   login,
   logout,
+  refreshCurrentUser,
 };
