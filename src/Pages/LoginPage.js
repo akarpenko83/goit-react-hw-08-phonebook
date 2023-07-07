@@ -1,4 +1,4 @@
-import { Notify } from 'notiflix';
+import { Loading, Notify } from 'notiflix';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from 'redux/auth/authOperations';
@@ -11,6 +11,7 @@ export const LoginPage = () => {
 
   const onSubmit = async credentials => {
     try {
+      Loading.hourglass();
       await dispatch(
         authOperations.login({ email, password }),
       );
@@ -19,6 +20,8 @@ export const LoginPage = () => {
     } catch (error) {
       console.log(error);
       Notify.failure(`failed to login`);
+    } finally {
+      Loading.remove();
     }
   };
   const handleSubmit = evt => {
