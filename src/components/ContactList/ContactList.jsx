@@ -10,6 +10,7 @@ import { selectFilterValue } from 'redux/filterSlice';
 import { contactsSelectors } from 'redux/contacts/contactSlice';
 import { useEffect } from 'react';
 import { contactsOperations } from 'redux/contacts/contactOperations';
+import { Loading } from 'notiflix';
 
 export default function ContactList() {
   const dispatch = useDispatch();
@@ -27,7 +28,14 @@ export default function ContactList() {
   };
 
   useEffect(() => {
-    dispatch(contactsOperations.getContacts());
+    try {
+      Loading.hourglass();
+      dispatch(contactsOperations.getContacts());
+    } catch (error) {
+      console.log(error);
+    } finally {
+      Loading.remove();
+    }
   }, [dispatch]);
 
   const renderedContacts = filteredContacts();

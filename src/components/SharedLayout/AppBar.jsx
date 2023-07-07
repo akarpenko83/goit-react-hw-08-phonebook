@@ -11,7 +11,6 @@ import { AuthNav } from './AuthNav';
 import { useSelector } from 'react-redux';
 import { authSelectors } from 'redux/auth/authSlice';
 import { UserMenu } from './UserMenu';
-import { ContactsPage } from 'Pages/ContactsPage';
 
 export const AppBar = () => {
   const isLoggedIn = useSelector(
