@@ -26,12 +26,10 @@ export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onSubmit = async credentials => {
+  const onSubmit = credentials => {
     try {
       Loading.hourglass();
-      await dispatch(
-        authOperations.login({ email, password }),
-      );
+      dispatch(authOperations.login({ email, password }));
 
       Notify.success(`${email} logged in successfully`);
     } catch (error) {
