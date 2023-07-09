@@ -1,7 +1,27 @@
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Grid,
+  Paper,
+  TextField,
+  ThemeProvider,
+  Typography,
+  createTheme,
+} from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Loading, Notify } from 'notiflix';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from 'redux/auth/authOperations';
+import { NavLink } from 'react-router-dom';
+
+const defaultTheme = createTheme();
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -60,42 +80,94 @@ export const RegisterForm = () => {
   };
 
   return (
-    <>
-      <h2> RegisterPage </h2>
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Paper>
+          <Box
+            sx={{
+              marginTop: 8,
+              padding: 6,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar
+              sx={{ m: 1, bgcolor: 'secondary.main' }}
+            >
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    autoComplete="given-name"
+                    name="name"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                    value={name}
+                    onChange={handleChange}
+                  />
+                </Grid>
 
-      <form onSubmit={handleSubmit} autoComplete="on">
-        <label>
-          Name
-          <input
-            type="text"
-            name="name"
-            placeholder="Jon Doe"
-            value={name}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          E-mail Address
-          <input
-            type="email"
-            name="email"
-            placeholder="e-mail address"
-            value={email}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            name="password"
-            placeholder="enter your password"
-            value={password}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Add user</button>
-      </form>
-    </>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={handleChange}
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                endIcon={<SendIcon />}
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <NavLink to="/login" variant="body2">
+                    Already have an account? Sign in
+                  </NavLink>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Paper>
+      </Container>
+    </ThemeProvider>
   );
 };

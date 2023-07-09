@@ -1,16 +1,19 @@
 import React from 'react';
 import { useState } from 'react';
-
+import SendIcon from '@mui/icons-material/Send';
 import { contactsSelectors } from 'redux/contacts/contactSlice.js';
 import { Notify } from 'notiflix';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsOperations } from 'redux/contacts/contactOperations';
 import {
+  Box,
   Button,
-  Form,
-  FormGroup,
-} from './contactForm.styled';
+  Container,
+  Grid,
+  Paper,
+  TextField,
+} from '@mui/material';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -72,7 +75,8 @@ export default function ContactForm() {
         setName(evt.currentTarget.value.trim());
         break;
       case 'number':
-        setNumber(evt.currentTarget.value.trim());
+        let trimmedInput = evt.currentTarget.value.trim();
+        setNumber(trimmedInput.replace(/\D/g, ''));
         break;
       default:
         break;
@@ -80,38 +84,80 @@ export default function ContactForm() {
   };
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          Name
-          <input
-            // value={null}
-            value={name}
-            placeholder="John Doe"
-            // onChange={null}
-            onChange={handleChange}
-            type="text"
-            name="name"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          Number
-          <input
-            // value={null}
-            value={number}
-            type="tel"
-            placeholder="050-000-00-00"
-            // onChange={null}
-            onChange={handleChange}
-            name="number"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-        </FormGroup>
-        <Button type="submit">Add contact</Button>
-      </Form>
-    </>
+    <Container
+      component="main"
+      maxWidth="xl"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Paper
+        sx={{
+          width: '50%',
+          marginBottom: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgb(127, 212, 158)',
+        }}
+      >
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{
+            marginTop: 8,
+            padding: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                value={name}
+                variant="filled"
+                autoComplete="on"
+                name="name"
+                required
+                fullWidth
+                id="Name"
+                label="Name"
+                autoFocus
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                size="normal"
+                variant="filled"
+                type="tel"
+                required
+                fullWidth
+                id="number"
+                label="Phone number"
+                name="number"
+                autoComplete="number"
+                value={number}
+                onChange={handleChange}
+                placeholder="123-4567-8901"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            endIcon={<SendIcon />}
+          >
+            Add contact
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
 }

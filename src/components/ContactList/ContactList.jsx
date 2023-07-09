@@ -1,9 +1,4 @@
 import Contact from '../Contact/Contact';
-import {
-  ContactListContainer,
-  ContactItem,
-  Title,
-} from './ContactList.styled';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilterValue } from 'redux/filterSlice';
@@ -11,6 +6,7 @@ import { contactsSelectors } from 'redux/contacts/contactSlice';
 import { useEffect } from 'react';
 import { contactsOperations } from 'redux/contacts/contactOperations';
 import { Loading } from 'notiflix';
+import { Container, Grid, Typography } from '@mui/material';
 
 export default function ContactList() {
   const dispatch = useDispatch();
@@ -40,19 +36,28 @@ export default function ContactList() {
 
   const renderedContacts = filteredContacts();
   return (
-    <>
-      <Title>Contacts:</Title>
-      <ContactListContainer>
+    <Container component="main" maxWidth="xl">
+      <Typography
+        component="h2"
+        variant="h4"
+        sx={{
+          marginBottom: '20px',
+          textAlign: 'center',
+        }}
+      >
+        Contacts:
+      </Typography>
+      <Grid container spacing={2}>
         {renderedContacts.map(({ name, number, id }) => (
-          <ContactItem key={id}>
+          <Grid item xs={6} key={id}>
             <Contact
               name={name}
               number={number}
               contactId={id}
             />
-          </ContactItem>
+          </Grid>
         ))}
-      </ContactListContainer>
-    </>
+      </Grid>
+    </Container>
   );
 }

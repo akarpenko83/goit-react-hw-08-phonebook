@@ -1,10 +1,15 @@
 import PropTypes from 'prop-types';
-import { DeleteButton } from './Contact.styled';
 
 import { Loading, Notify } from 'notiflix';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsOperations } from 'redux/contacts/contactOperations';
 import { contactsSelectors } from 'redux/contacts/contactSlice';
+import {
+  Button,
+  Container,
+  Paper,
+  Typography,
+} from '@mui/material';
 
 export default function Contact({
   name,
@@ -32,16 +37,47 @@ export default function Contact({
     }
   };
   return (
-    <>
-      {name}: {number}
-      <DeleteButton
-        onClick={() => deleteContact(contactId)}
-        type="button"
-        disabled={loading}
+    <Container
+      component="main"
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
+      }}
+    >
+      <Paper
+        sx={{
+          padding: '10px',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
       >
-        Delete
-      </DeleteButton>
-    </>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+          }}
+        >
+          {name}
+        </Typography>
+        <Typography
+          sx={{
+            fontStyle: 'italic',
+          }}
+        >
+          {number}
+        </Typography>
+        <Button
+          size="small"
+          variant="contained"
+          onClick={() => deleteContact(contactId)}
+          type="button"
+          disabled={loading}
+        >
+          Delete
+        </Button>
+      </Paper>
+    </Container>
   );
 }
 Contact.propTypes = {
